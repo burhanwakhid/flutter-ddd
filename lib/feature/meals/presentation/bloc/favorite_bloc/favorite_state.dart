@@ -11,6 +11,8 @@ class Empty extends FavoriteState {}
 
 class AddSuccess extends FavoriteState {}
 
+class DeleteSuccess extends FavoriteState {}
+
 class Loading extends FavoriteState {}
 
 class Loaded extends FavoriteState {

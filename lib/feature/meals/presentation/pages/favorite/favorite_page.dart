@@ -42,8 +42,27 @@ class _FavoritePageState extends State<FavoritePage> {
                 return ListView.builder(
                   itemCount: state.meals.length,
                   itemBuilder: (context, i) {
-                    return ListTile(
-                      title: Text(state.meals[i].strMeal),
+                    return BlocListener<FavoriteBloc, FavoriteState>(
+                      listener: (context, state) {
+                        if (state is DeleteSuccess) {
+                          favoriteBloc.add(GetFavorite());
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Delete Success')));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Delete Gagal')));
+                        }
+                      },
+                      child: ListTile(
+                        title: Text(state.meals[i].strMeal),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            favoriteBloc
+                                .add(DeleteFavoriteEvent(state.meals[i]));
+                          },
+                        ),
+                      ),
                     );
                   },
                 );

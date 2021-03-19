@@ -5,6 +5,7 @@ import 'package:flutter_meals/feature/meals/data/database/favorite_db.dart';
 import 'package:flutter_meals/feature/meals/data/datasources/favorite_local_data_source.dart';
 import 'package:flutter_meals/feature/meals/data/datasources/meals_remote_data_source.dart';
 import 'package:flutter_meals/feature/meals/data/repositories/meals_repository_impl.dart';
+import 'package:flutter_meals/feature/meals/domain/usecases/delete_favorite_meals.dart';
 import 'package:flutter_meals/feature/meals/domain/usecases/get_favorite_meals.dart';
 import 'package:flutter_meals/feature/meals/domain/usecases/get_list_meals.dart';
 import 'package:flutter_meals/feature/meals/presentation/bloc/favorite_bloc/favorite_bloc.dart';
@@ -26,12 +27,14 @@ class AppModule extends Module {
       (i) => FavoriteBloc(
         db: i.call(),
         favoriteMeals: i.call(),
+        deleteFavorite: i.call(),
       ),
     ),
 
     // Use Cases
     Bind.lazySingleton((i) => GetListMeals(i.call())),
     Bind.lazySingleton((i) => GetFavoriteMeals(repository: i.call())),
+    Bind.lazySingleton((i) => DeleteFavorite(repository: i.call())),
 
     // Repository
     Bind.lazySingleton<MealsRepository>(

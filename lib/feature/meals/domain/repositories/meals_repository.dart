@@ -8,7 +8,7 @@ abstract class MealsRepository {
 
   Future<Either<Failure, List<MealsEntity>>> getFavoriteListMeals();
 
-  Future<Either<Failure, void>> deleteFavoriteListMeals(FavoriteTable id);
+  Future<Either<Failure, void>> deleteFavoriteListMeals(MealsEntity id);
 
   Future<Either<Failure, void>> saveFavoriteListMeals(MealsEntity entity);
 }

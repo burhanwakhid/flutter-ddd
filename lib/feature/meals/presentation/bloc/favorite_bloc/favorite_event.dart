@@ -16,4 +16,13 @@ class AddFavorite extends FavoriteEvent {
   List<Object> get props => [entity];
 }
 
+class DeleteFavoriteEvent extends FavoriteEvent {
+  final MealsEntity entity;
+
+  DeleteFavoriteEvent(this.entity);
+
+  @override
+  List<Object> get props => [entity];
+}
+
 class GetFavorite extends FavoriteEvent {}

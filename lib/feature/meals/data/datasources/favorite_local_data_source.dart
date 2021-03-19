@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 abstract class FavoriteLocalDataSource {
   Future<void> saveMeals(MealsEntity entity);
   Future<List<MealsEntity>> getListMeals();
-  Future<void> deleteMeals(FavoriteTable mealsId);
+  Future<void> deleteMeals(MealsEntity mealsId);
   Future<bool> checkIfMealsFavorite(int mealsId);
 }
 
@@ -30,9 +30,60 @@ class FavoriteLocalDataSourceImpl implements FavoriteLocalDataSource {
   }
 
   @override
-  Future<void> deleteMeals(FavoriteTable favoriteTable) async {
+  Future<void> deleteMeals(MealsEntity favoriteTable) async {
     try {
-      await appDatabase.deleteOrder(favoriteTable);
+      final fav = FavoriteTable(
+        id: int.parse(favoriteTable.idMeal),
+        strMeal: favoriteTable.strMeal,
+        strCategory: favoriteTable.strCategory,
+        strArea: favoriteTable.strArea,
+        strInstructions: favoriteTable.strInstructions,
+        strMealThumb: favoriteTable.strMealThumb,
+        strTags: favoriteTable.strTags,
+        strYoutube: favoriteTable.strYoutube,
+        strIngredient1: favoriteTable.strIngredient1,
+        strIngredient2: favoriteTable.strIngredient2,
+        strIngredient3: favoriteTable.strIngredient3,
+        strIngredient4: favoriteTable.strIngredient4,
+        strIngredient5: favoriteTable.strIngredient5,
+        strIngredient6: favoriteTable.strIngredient6,
+        strIngredient7: favoriteTable.strIngredient7,
+        strIngredient8: favoriteTable.strIngredient8,
+        strIngredient9: favoriteTable.strIngredient9,
+        strIngredient10: favoriteTable.strIngredient10,
+        strIngredient11: favoriteTable.strIngredient11,
+        strIngredient12: favoriteTable.strIngredient12,
+        strIngredient13: favoriteTable.strIngredient13,
+        strIngredient14: favoriteTable.strIngredient14,
+        strIngredient15: favoriteTable.strIngredient15,
+        strIngredient16: favoriteTable.strIngredient16,
+        strIngredient17: favoriteTable.strIngredient17,
+        strIngredient18: favoriteTable.strIngredient18,
+        strIngredient19: favoriteTable.strIngredient19,
+        strIngredient20: favoriteTable.strIngredient20,
+        strMeasure1: favoriteTable.strMeasure1,
+        strMeasure2: favoriteTable.strMeasure2,
+        strMeasure3: favoriteTable.strMeasure3,
+        strMeasure4: favoriteTable.strMeasure4,
+        strMeasure5: favoriteTable.strMeasure5,
+        strMeasure6: favoriteTable.strMeasure6,
+        strMeasure7: favoriteTable.strMeasure7,
+        strMeasure8: favoriteTable.strMeasure8,
+        strMeasure9: favoriteTable.strMeasure9,
+        strMeasure10: favoriteTable.strMeasure10,
+        strMeasure11: favoriteTable.strMeasure11,
+        strMeasure12: favoriteTable.strMeasure12,
+        strMeasure13: favoriteTable.strMeasure13,
+        strMeasure14: favoriteTable.strMeasure14,
+        strMeasure15: favoriteTable.strMeasure15,
+        strMeasure16: favoriteTable.strMeasure16,
+        strMeasure17: favoriteTable.strMeasure17,
+        strMeasure18: favoriteTable.strMeasure18,
+        strMeasure19: favoriteTable.strMeasure19,
+        strMeasure20: favoriteTable.strMeasure20,
+        strSource: favoriteTable.strSource,
+      );
+      await appDatabase.deleteOrder(fav);
     } catch (e) {
       throw DatabaseException();
     }

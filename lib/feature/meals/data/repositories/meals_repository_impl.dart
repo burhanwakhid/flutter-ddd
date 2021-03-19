@@ -42,8 +42,7 @@ class MealRepositoryImpl implements MealsRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteFavoriteListMeals(
-      FavoriteTable id) async {
+  Future<Either<Failure, void>> deleteFavoriteListMeals(MealsEntity id) async {
     try {
       final response = await favoriteLocalDataSource.deleteMeals(id);
       return Right(response);

@@ -8,6 +8,7 @@ import 'package:flutter_meals/core/error/failures.dart';
 import 'package:flutter_meals/core/usecases/usecase.dart';
 import 'package:flutter_meals/feature/meals/data/database/favorite_db.dart';
 import 'package:flutter_meals/feature/meals/domain/entities/meals_entities.dart';
+import 'package:flutter_meals/feature/meals/domain/usecases/delete_favorite_meals.dart';
 import 'package:flutter_meals/feature/meals/domain/usecases/get_favorite_meals.dart';
 
 part 'favorite_event.dart';
@@ -16,10 +17,13 @@ part 'favorite_state.dart';
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   final AppDatabase database;
   final GetFavoriteMeals _favoriteMeals;
+  final DeleteFavorite _deleteFavorite;
   FavoriteBloc({
     @required AppDatabase db,
     @required GetFavoriteMeals favoriteMeals,
+    @required DeleteFavorite deleteFavorite,
   })  : database = db,
+        _deleteFavorite = deleteFavorite,
         _favoriteMeals = favoriteMeals,
         super(Empty());
 
@@ -91,6 +95,16 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
 
       yield* _eitherLoadedOrErrorState(data);
       // print(data);
+    } else if (event is DeleteFavoriteEvent) {
+      try {
+        var data = await _deleteFavorite(Params(entity: event.entity));
+        yield data.fold(
+          (l) => Error(message: 'error'),
+          (r) => DeleteSuccess(),
+        );
+      } catch (e) {
+        yield Error(message: 'error');
+      }
     }
   }
 
