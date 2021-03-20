@@ -1,5 +1,5 @@
 # Screenshots
-<img src="./screenshots/1.png" style="display: block; margin-left: auto; margin-right: auto; width: 35%;"/>
-<img src="./screenshots/2.png" style="display: block; margin-left: auto; margin-right: auto; width: 35%;"/>
-<img src="./screenshots/3.png" style="display: block; margin-left: auto; margin-right: auto; width: 35%;"/>
-<img src="./screenshots/4.png" style="display: block; margin-left: auto; margin-right: auto; width: 35%;"/>
+<img src="./screenshots/1.png" width="200"/>
+<img src="./screenshots/2.png" width="200"/>
+<img src="./screenshots/3.png" width="200"/>
+<img src="./screenshots/4.png" width="200"/>
