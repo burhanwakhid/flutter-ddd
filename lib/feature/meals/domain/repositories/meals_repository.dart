@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_meals/core/error/failures.dart';
-import 'package:flutter_meals/feature/meals/data/database/favorite_db.dart';
 import 'package:flutter_meals/feature/meals/domain/entities/meals_entities.dart';
 
 abstract class MealsRepository {

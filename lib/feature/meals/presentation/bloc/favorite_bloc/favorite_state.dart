@@ -13,6 +13,8 @@ class AddSuccess extends FavoriteState {}
 
 class DeleteSuccess extends FavoriteState {}
 
+class DeleteError extends FavoriteState {}
+
 class Loading extends FavoriteState {}
 
 class Loaded extends FavoriteState {

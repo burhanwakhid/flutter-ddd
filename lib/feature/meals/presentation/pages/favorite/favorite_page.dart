@@ -26,11 +26,13 @@ class _FavoritePageState extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      // create: (context) => favoriteBloc,
-      value: favoriteBloc,
+    return BlocProvider(
+      create: (context) => favoriteBloc,
+      // value: favoriteBloc,
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text('List Favorite'),
+        ),
         body: BlocBuilder<FavoriteBloc, FavoriteState>(
           builder: (context, state) {
             print(state);
@@ -44,20 +46,25 @@ class _FavoritePageState extends State<FavoritePage> {
                   itemBuilder: (context, i) {
                     return BlocListener<FavoriteBloc, FavoriteState>(
                       listener: (context, state) {
+                        print(state);
                         if (state is DeleteSuccess) {
                           favoriteBloc.add(GetFavorite());
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Delete Success')));
-                        } else {
+                        } else if (state is DeleteError) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Delete Gagal')));
                         }
                       },
                       child: ListTile(
+                        onTap: () => Modular.to.pushNamed(
+                          '/detailMeals',
+                          arguments: state.meals[i],
+                        ),
                         title: Text(state.meals[i].strMeal),
                         trailing: IconButton(
                           icon: Icon(Icons.delete),
-                          onPressed: () {
+                          onPressed: () async {
                             favoriteBloc
                                 .add(DeleteFavoriteEvent(state.meals[i]));
                           },

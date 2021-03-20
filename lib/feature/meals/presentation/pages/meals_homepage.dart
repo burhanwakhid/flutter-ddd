@@ -78,16 +78,23 @@ class _MealsHomePageState extends State<MealsHomePage> {
                         "Good Morning!",
                         style: kTitleStyle,
                       ),
-                      MiniText(text: "What would you like to order?"),
+                      MiniText(
+                          text: "What would you like to search Meal recipe?"),
                       SizedBox(
                         height: 30,
                       ),
                       SearchBox(
                         mealsBloc: mealsBloc,
                       ),
+                      SizedBox(
+                        height: 30,
+                      ),
                       ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize:
+                                Size(MediaQuery.of(context).size.width, 40)),
                         onPressed: () => Modular.to.pushNamed('/favoriteMeals'),
-                        child: Text('favorite'),
+                        child: Text('go to favorite'),
                       ),
                       SizedBox(
                         height: 30,
@@ -157,7 +164,7 @@ class SearchBox extends StatelessWidget {
           mealsBloc.add(GetListMeals(val));
         },
         decoration: InputDecoration(
-          hintText: "Search Food or Cafes near you",
+          hintText: "Search Meals...",
           border: InputBorder.none,
         ),
       ),

@@ -23,7 +23,7 @@ class ListMealsWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                "Recent Orders",
+                "Recent Meals",
                 style: kSubTitleStyle,
               ),
               Spacer(),
@@ -52,98 +52,123 @@ class ListMealsWidget extends StatelessWidget {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                                width: 320,
-                                margin: EdgeInsets.only(right: 20),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () {
-                                      Modular.to.pushNamed(
-                                        '/detailMeals',
-                                        arguments: state.meals[index],
-                                      );
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 4,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                  image: NetworkImage(state
-                                                      .meals[index]
-                                                      .strMealThumb),
-                                                  // fit: BoxFit.cover,
-                                                ),
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(20),
-                                                  bottomLeft:
-                                                      Radius.circular(20),
-                                                )),
+                              width: 320,
+                              margin: EdgeInsets.only(right: 20),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {
+                                    Modular.to.pushNamed(
+                                      '/detailMeals',
+                                      arguments: state.meals[index],
+                                    );
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 4,
+                                        child: Container(
+                                          // width: 110,
+                                          height: 120,
+                                          decoration: BoxDecoration(
+                                            // color: Colors.red,
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                state.meals[index].strMealThumb,
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              bottomLeft: Radius.circular(20),
+                                            ),
                                           ),
                                         ),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Expanded(
-                                          flex: 6,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                '${state.meals[index].strMeal}',
-                                                style: GoogleFonts.nunitoSans(
-                                                  fontSize: 24,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: titleColor,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              MiniText(
-                                                text:
-                                                    "${state.meals[index].strCategory}",
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Text(
-                                                'From ${state.meals[index].strArea}',
-                                                style: GoogleFonts.nunitoSans(
-                                                  fontSize: 24,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.green,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Column(
+                                      ),
+
+                                      // Expanded(
+                                      //   flex: 4,
+                                      //   child: Container(
+                                      //     decoration: BoxDecoration(
+                                      //       color: Colors
+                                      //           .blueAccent, //remove color to make it transpatent
+                                      //       border: Border.all(
+                                      //           style: BorderStyle.solid,
+                                      //           color: Colors.white),
+                                      //       image: DecorationImage(
+                                      //         fit: BoxFit.fill,
+                                      //         image: NetworkImage(
+                                      //           'https://image.freepik.com/free-photo/penne-pasta-tomato-sauce-with-chicken-tomatoes-wooden-table_2829-19744.jpg',
+                                      //         ),
+                                      //         // fit: BoxFit.cover,
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Expanded(
+                                        flex: 6,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                              MainAxisAlignment.center,
                                           children: [
-                                            SizedBox(height: 20),
-                                            Icon(
-                                              Icons.bookmark,
-                                              color: Colors.grey,
+                                            Text(
+                                              '${state.meals[index].strMeal}',
+                                              style: GoogleFonts.nunitoSans(
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.w500,
+                                                color: titleColor,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            MiniText(
+                                              text:
+                                                  "${state.meals[index].strCategory}",
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              'From ${state.meals[index].strArea}',
+                                              style: GoogleFonts.nunitoSans(
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.green,
+                                              ),
                                             ),
                                           ],
                                         ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          SizedBox(height: 20),
+                                          Icon(
+                                            Icons.bookmark,
+                                            color: Colors.grey,
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                    ],
                                   ),
-                                )),
+                                ),
+                              ),
+                            ),
                           );
                         },
                       );
