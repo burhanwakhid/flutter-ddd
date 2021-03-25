@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_meals/feature/meals/presentation/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:flutter_meals/feature/meals/presentation/bloc/list_meals_bloc/list_meals_bloc.dart';
 import 'package:flutter_meals/feature/meals/presentation/widgets/list_meal_widget.dart';
 import 'package:flutter_meals/shared/colors.dart';

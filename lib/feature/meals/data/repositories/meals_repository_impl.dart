@@ -1,7 +1,9 @@
+import 'package:flutter_meals/core/error/exceptions.dart';
 import 'package:flutter_meals/core/helper/network/network_info.dart';
-import 'package:flutter_meals/feature/meals/data/database/favorite_db.dart';
 import 'package:flutter_meals/feature/meals/data/datasources/favorite_local_data_source.dart';
+import 'package:flutter_meals/feature/meals/data/datasources/meals_local_data_source.dart';
 import 'package:flutter_meals/feature/meals/data/datasources/meals_remote_data_source.dart';
+import 'package:flutter_meals/feature/meals/data/models/list_meals_model.dart';
 import 'package:flutter_meals/feature/meals/domain/entities/meals_entities.dart';
 import 'package:flutter_meals/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
@@ -9,26 +11,25 @@ import 'package:flutter_meals/feature/meals/domain/repositories/meals_repository
 
 import 'package:meta/meta.dart';
 
-// typedef Future<MealsEntity> _ConcreteOrRandomChooser();
+typedef Future<ListMealModel> _ConcreteOrRandomChooser();
 
 class MealRepositoryImpl implements MealsRepository {
   final MealsRemoteDataSource remoteDataSource;
   final NetworkInfo networkInfo;
   final FavoriteLocalDataSource favoriteLocalDataSource;
+  final MealsLocalDataSource mealsLocalDataSource;
 
   MealRepositoryImpl({
     @required this.remoteDataSource,
     @required this.networkInfo,
     @required this.favoriteLocalDataSource,
+    @required this.mealsLocalDataSource,
   });
   @override
   Future<Either<Failure, List<MealsEntity>>> getListMeals(String search) async {
-    try {
-      final remoteMeals = await remoteDataSource.getListMeals(search);
-      return Right(remoteMeals.meals);
-    } catch (e) {
-      return Left(ServerFailure());
-    }
+    return await _getMeals(() {
+      return remoteDataSource.getListMeals(search);
+    });
   }
 
   @override
@@ -62,24 +63,24 @@ class MealRepositoryImpl implements MealsRepository {
     }
   }
 
-  // Future<Either<Failure, MealsEntity>> _getMeals(
-  //   _ConcreteOrRandomChooser getConcreteOrRandom,
-  // ) async {
-  //   if (await networkInfo.isConnected) {
-  //     try {
-  //       final remoteMeals = await getConcreteOrRandom();
-  //       localDataSource.cacheNumberTrivia(remoteMeals);
-  //       return Right(remoteTrivia);
-  //     } on ServerException {
-  //       return Left(ServerFailure());
-  //     }
-  //   } else {
-  //     try {
-  //       final localTrivia = await localDataSource.getLastNumberTrivia();
-  //       return Right(localTrivia);
-  //     } on CacheException {
-  //       return Left(CacheFailure());
-  //     }
-  //   }
-  // }
+  Future<Either<Failure, List<MealsEntity>>> _getMeals(
+    _ConcreteOrRandomChooser getConcreteOrRandom,
+  ) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteMeals = await getConcreteOrRandom();
+        mealsLocalDataSource.cachedMeals(remoteMeals);
+        return Right(remoteMeals.meals);
+      } on ServerException catch (_) {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        final localMeals = await mealsLocalDataSource.getLastMeals();
+        return Right(localMeals.meals);
+      } on CacheException {
+        return Left(CacheFailure());
+      }
+    }
+  }
 }

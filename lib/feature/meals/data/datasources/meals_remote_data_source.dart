@@ -1,5 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_meals/core/error/exceptions.dart';
+import 'package:flutter_meals/core/network/dio_client.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter_meals/feature/meals/data/models/list_meals_model.dart';
 
@@ -8,7 +8,7 @@ abstract class MealsRemoteDataSource {
 }
 
 class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
-  final Dio dio;
+  final DioClient dio;
 
   MealsRemoteDataSourceImpl({@required this.dio});
 
@@ -24,20 +24,8 @@ class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
       print(response.data);
       final res = ListMealModel.fromJson(response.data);
       return res;
-    } on DioError catch (_) {
+    } catch (e) {
       throw ServerException();
-      // if (e.response.statusCode == 401) {
-      //   print(e.response.statusMessage);
-      //   throw Exception(e.response.statusCode);
-      // } else if (e.response.statusCode >= 400 && e.response.statusCode < 500) {
-      //   print(e.message);
-      //   ErrorModel errorModel = ErrorModel.fromJson(e.response.data);
-      //   throw ErrorException(errorModel);
-      // } else if (e.type == DioErrorType.CONNECT_TIMEOUT) {
-      //   throw TimeOutException();
-      // } else {
-      //   throw BadRequestException();
-      // }
     }
   }
 }
